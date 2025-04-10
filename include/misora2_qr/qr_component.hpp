@@ -36,7 +36,7 @@ public:
     DetectQR() : DetectQR(rclcpp::NodeOptions{}) {}
 
 private:
-    void scan_qr_callback(const std::unique_ptr<cv::Mat> msg);
+    void update_image_callback(const std::unique_ptr<cv::Mat> msg);
 
     rclcpp::Subscription<MyAdaptedType>::SharedPtr receive_image_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr decode_data_publisher_;
