@@ -18,6 +18,10 @@ void DetectQR::update_image_callback(const std::unique_ptr<cv::Mat> msg){
     receive_image = std::move(*msg);
 
     RCLCPP_INFO_STREAM(this->get_logger(),"Receive image address: " << &(msg->data));
+
+    std_msgs::msg::String msg_S;
+    msg_S.data = "code";
+    decode_data_publisher_->publish(msg_S);
     
 }
 
