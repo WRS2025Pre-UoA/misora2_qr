@@ -23,7 +23,7 @@ void DetectQR::update_image_callback(const std::unique_ptr<cv::Mat> msg){
     msg_S.data = "code";
     decode_data_publisher_->publish(msg_S);
     result_image_publisher_->publish(receive_image);
-    RCLCPP_INFO_STREAM(this->get_logger(),"Publish: ", receive_image.size() );
+    RCLCPP_INFO_STREAM(this->get_logger(),"Publish: "<< receive_image.size() );
     
 }
 
