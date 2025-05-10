@@ -15,16 +15,31 @@ DetectQR::DetectQR(const rclcpp::NodeOptions &options)
 }   
 
 void DetectQR::update_image_callback(const std::unique_ptr<cv::Mat> msg){
-    receive_image = std::move(*msg);
-
-    // RCLCPP_INFO_STREAM(this->get_logger(),"Receive image address: " << &(msg->data));
-
-    std_msgs::msg::String msg_S;
-    msg_S.data = "code";
-    decode_data_publisher_->publish(msg_S);
-    result_image_publisher_->publish(receive_image);
-    RCLCPP_INFO_STREAM(this->get_logger(),"Publish: "<< receive_image.size() );
-    
+    cv::Mat receive_image = std::move(*msg);
+    std::string decode_contents;
+    if (not(receive_image.empty())){
+        if (flag == false and receive_image.channels() != 1){// カラー画像である
+            // 実装分部
+            // decode_contents = func(receive_image); 返り値は：成功 "~" または　失敗 "None"
+            // if( decode_contents != "None" ){
+            //     std_msgs::msg::String msg_S;
+            //     msg_S.data = decode_contents;
+            //     decode_data_publisher_->publish(msg_S);
+            //     result_image_publisher_->publish(receive_image);
+            //     RCLCPP_INFO_STREAM(this->get_logger(),"Publish: "<< receive_image.size() );
+            //     flag = true;
+            // }
+            // テスト用-------------------------------------------
+            std_msgs::msg::String msg_S;
+            msg_S.data = "code";
+            decode_data_publisher_->publish(msg_S);
+            result_image_publisher_->publish(receive_image);
+            RCLCPP_INFO_STREAM(this->get_logger(),"Publish: "<< receive_image.size() );
+            flag = true;
+            // ---------------------------------------------------
+        }
+        else if(receive_image.channels() == 1) flag = false;// 1 chanelある画像　黒画像
+    }
 }
 
 } //namespace component_qr

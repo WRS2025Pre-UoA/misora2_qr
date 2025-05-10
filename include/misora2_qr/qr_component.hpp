@@ -29,9 +29,7 @@ class DetectQR : public rclcpp::Node
 public:
     using MyAdaptedType = rclcpp::TypeAdapter<cv::Mat, sensor_msgs::msg::Image>;
 
-    std::string decode_contents;
-    cv::Mat result_image, receive_image;
-
+    bool flag = false;
     explicit DetectQR(const rclcpp::NodeOptions &options);
     DetectQR() : DetectQR(rclcpp::NodeOptions{}) {}
 
