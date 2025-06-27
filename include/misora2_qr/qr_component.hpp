@@ -17,6 +17,7 @@
 #include <sensor_msgs/msg/image.hpp>
 #include <cv_bridge/cv_bridge.h>
 #include <rclcpp/type_adapter.hpp>
+#include <zbar.h> // qr読み取り専用
 
 #include "misora2_qr/cv_mat_type_adapter.hpp"
 
@@ -35,6 +36,8 @@ public:
 
 private:
     void update_image_callback(const std::unique_ptr<cv::Mat> msg);
+
+    zbar::ImageScanner scanner_;
 
     rclcpp::Subscription<MyAdaptedType>::SharedPtr receive_image_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr decode_data_publisher_;

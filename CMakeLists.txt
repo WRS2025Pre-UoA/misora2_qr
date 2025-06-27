@@ -21,6 +21,12 @@ find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(OpenCV REQUIRED COMPONENTS core)
 
+# zbar を pkg-config で探す                                                    
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(ZBAR REQUIRED zbar)
+
+link_directories(${ZBAR_LIBRARY_DIRS})
+
 include_directories(
   include
 )
@@ -36,10 +42,12 @@ set(dependencies
 
 add_library(qr_library SHARED src/qr_component.cpp)
 ament_target_dependencies(qr_library ${dependencies})
+target_link_libraries(qr_library ${ZBAR_LIBRARIES})
 rclcpp_components_register_nodes(qr_library "component_qr::DetectQR")
 
 add_executable(qr_node src/qr_component.cpp src/qr_node.cpp)
 ament_target_dependencies(qr_node ${dependencies})
+target_link_libraries(qr_node ${ZBAR_LIBRARIES})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
