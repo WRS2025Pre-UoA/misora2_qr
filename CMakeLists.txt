@@ -40,14 +40,22 @@ set(dependencies
     std_msgs
 )
 
-add_library(qr_library SHARED src/qr_component.cpp)
+add_library(qr_library SHARED src/qr_component.cpp src/qr_reader.cpp)
 ament_target_dependencies(qr_library ${dependencies})
 target_link_libraries(qr_library ${ZBAR_LIBRARIES})
 rclcpp_components_register_nodes(qr_library "component_qr::DetectQR")
 
-add_executable(qr_node src/qr_component.cpp src/qr_node.cpp)
+add_executable(qr_node src/qr_component.cpp src/qr_node.cpp src/qr_reader.cpp)
 ament_target_dependencies(qr_node ${dependencies})
 target_link_libraries(qr_node ${ZBAR_LIBRARIES})
+
+# QR読み取り器 main関数から実行
+add_executable(qr_reader 
+    src/qr_reader_main.cpp 
+    src/qr_reader.cpp 
+    )
+ament_target_dependencies(qr_reader ${dependencies})
+target_link_libraries(qr_reader ${ZBAR_LIBRARIES})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -65,6 +73,7 @@ install(TARGETS
 
 install(TARGETS
   qr_node
+  qr_reader
   DESTINATION lib/${PROJECT_NAME}
 )
 

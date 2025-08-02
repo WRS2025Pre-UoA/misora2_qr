@@ -10,8 +10,14 @@ sudo apt update
 sudo apt upgrade
 ~~~
 ## 実行コード
+ - ノード単体として実行
 ~~~bash!
 colcon build --symlink-install
 source install/setup.bash
-ros2 run misora2_qr qr_node
+ros2 run misora2_qr qr_node # qr_imageトピックで画像を受け取る
+~~~
+ - C++プログラムとして実行
+~~~bash!
+colcon build --symlink-install
+./build/misora2_qr/qr_reader <画像パス> #ワークスペースから実行
 ~~~
