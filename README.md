@@ -19,5 +19,5 @@ ros2 run misora2_qr qr_node # qr_imageトピックで画像を受け取る
  - C++プログラムとして実行
 ~~~bash!
 colcon build --symlink-install
-./build/misora2_qr/qr_reader <画像パス> #ワークスペースから実行
+./build/misora2_qr/qr_reader <画像パス> #ワークスペースから実行 src/misora2_qr/test.png
 ~~~

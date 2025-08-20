@@ -15,7 +15,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include <std_msgs/msg/string.hpp>
 #include <sensor_msgs/msg/image.hpp>
-#include <cv_bridge/cv_bridge.h>
+#include <cv_bridge/cv_bridge.hpp>
 #include <rclcpp/type_adapter.hpp>
 #include <zbar.h> // qr読み取り専用
 
