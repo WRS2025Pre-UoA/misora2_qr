@@ -25,6 +25,7 @@ find_package(cv_bridge REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(OpenCV 4.8 REQUIRED COMPONENTS core highgui imgproc)
+find_package(misora2_custom_msg REQUIRED)
 
 # zbar を pkg-config で探す                                                    
 find_package(PkgConfig REQUIRED)
@@ -43,6 +44,7 @@ set(dependencies
     OpenCV
     sensor_msgs
     std_msgs
+    misora2_custom_msg
 )
 
 add_library(qr_library SHARED src/qr_component.cpp src/qr_reader.cpp)

@@ -20,6 +20,7 @@
 #include <zbar.h> // qr読み取り専用
 
 #include "misora2_qr/cv_mat_type_adapter.hpp"
+#include "misora2_custom_msg/msg/custom.hpp"
 
 using namespace std::chrono_literals;
 
@@ -40,8 +41,9 @@ private:
     zbar::ImageScanner scanner_;
 
     rclcpp::Subscription<MyAdaptedType>::SharedPtr receive_image_;
-    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr decode_data_publisher_;
-    rclcpp::Publisher<MyAdaptedType>::SharedPtr result_image_publisher_;
+    // rclcpp::Publisher<std_msgs::msg::String>::SharedPtr decode_data_publisher_;
+    // rclcpp::Publisher<MyAdaptedType>::SharedPtr result_image_publisher_;
+    rclcpp::Publisher<misora2_custom_msg::msg::Custom>::SharedPtr publisher_; // メッセージ型変更
 };
 
 } // namespace component_qr
