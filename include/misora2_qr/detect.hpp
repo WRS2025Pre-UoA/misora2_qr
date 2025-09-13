@@ -6,6 +6,8 @@
 namespace DetectFunc
 {
     std::string detect_with_zbar(cv::Mat& image);
+    cv::Mat preprocess_for_opencv(const cv::Mat& src);
+    std::string try_opencv(const cv::Mat& image);
 };
 
 #endif

@@ -41,8 +41,6 @@ private:
     zbar::ImageScanner scanner_;
 
     rclcpp::Subscription<MyAdaptedType>::SharedPtr receive_image_;
-    // rclcpp::Publisher<std_msgs::msg::String>::SharedPtr decode_data_publisher_;
-    // rclcpp::Publisher<MyAdaptedType>::SharedPtr result_image_publisher_;
     rclcpp::Publisher<misora2_custom_msg::msg::Custom>::SharedPtr publisher_; // メッセージ型変更
 };
 
