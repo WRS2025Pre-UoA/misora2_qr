@@ -49,8 +49,9 @@ void DetectQR::update_image_callback(const std::unique_ptr<cv::Mat> msg){
             // それでも見つからない場合　データ送信を行わない
         }
         else if(receive_image.channels() == 1){
-            RCLCPP_INFO_STREAM(this->get_logger(),"Failed finding" );
-            flag = false;// 1 chanelある画像　黒画像
+            if (flag) RCLCPP_INFO_STREAM(this->get_logger(), "Success Process");
+            else RCLCPP_INFO_STREAM(this->get_logger(),"Failed Process" );
+            flag = false;// 1 chanelある画像　黒画像 
         }
     }
 }
