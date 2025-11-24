@@ -26,6 +26,13 @@ void DetectQR::update_image_callback(const std::unique_ptr<cv::Mat> msg){
                 RCLCPP_INFO_STREAM(this->get_logger(),"Publish: "<< receive_image.size() << " with decode: " << decode_contents );
                 flag = true;
 
+                cv::Mat output_image = receive_image.clone();
+                cv::putText(output_image, "ZBar Result: " + decode_contents, cv::Point(500, 250),
+                cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(0, 0, 255), 2);
+                // cv::imwrite("qr_result_zbar.png", output_image);
+                saved_img(receive_image, save_img, "QR_raw_image");
+                saved_img(output_image, save_img, "QR_detected_zbar_image");
+
                 misora2_custom_msg::msg::Custom data;
                 data.result = decode_contents;
                 data.image = *(cv_bridge::CvImage(std_msgs::msg::Header(), "bgr8", receive_image).toImageMsg());
@@ -53,6 +60,27 @@ void DetectQR::update_image_callback(const std::unique_ptr<cv::Mat> msg){
             else RCLCPP_INFO_STREAM(this->get_logger(),"Failed Process" );
             flag = false;// 1 chanelある画像　黒画像 
         }
+    }
+}
+
+void DetectQR::saved_img(cv::Mat& image, std::string save_path, std::string file_name){
+    // フォルダ内のファイル数をカウント
+    int count = 0;
+    for (auto& entry : std::filesystem::directory_iterator(save_path)) {
+        if (entry.is_regular_file()) {
+            std::string name = entry.path().filename().string();
+            if (name.rfind(file_name, 0) == 0) { // prefix で始まるか
+                count++;
+            }
+        }
+    }
+    std::string output_path = save_path + file_name + "_" + std::to_string(count) + ".png";
+    bool success = cv::imwrite(output_path, image);
+    
+    if (success) {
+        std::cout << "Image saved to: " << output_path << std::endl;
+    } else {
+        std::cerr << "Failed to save image to: " << output_path << std::endl;
     }
 }
 

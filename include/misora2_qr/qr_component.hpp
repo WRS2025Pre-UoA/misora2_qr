@@ -7,6 +7,7 @@
 #include <chrono>
 #include <functional>
 #include <algorithm>
+#include <filesystem>
 
 #include <rclcpp/clock.hpp>
 #include <rclcpp/time.hpp>
@@ -31,14 +32,15 @@ class DetectQR : public rclcpp::Node
 {
 public:
     using MyAdaptedType = rclcpp::TypeAdapter<cv::Mat, sensor_msgs::msg::Image>;
-
+    std::string save_img = "/home/misora2/misora2_ws/UoA_save_folder/";
+    // std::string save_img = "UoA_save_folder/";
     bool flag = false;
     explicit DetectQR(const rclcpp::NodeOptions &options);
     DetectQR() : DetectQR(rclcpp::NodeOptions{}) {}
 
 private:
     void update_image_callback(const std::unique_ptr<cv::Mat> msg);
-
+    void saved_img(cv::Mat& image, std::string save_path, std::string file_name);
     zbar::ImageScanner scanner_;
 
     rclcpp::Subscription<MyAdaptedType>::SharedPtr receive_image_;
